@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Home.module.css';
-import logo from '../assets/netflix-logo.png';
+import Navbar from '../components/Navbar';
 import Row from '../components/Row';
 import { fetchTrending, fetchTopRated, fetchActionMovies } from '../api/tmdb';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ function Home() {
   const [action, setAction] = useState([]);
   const [myList, setMyList] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [mainProfile, setMainProfile] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,6 +47,23 @@ function Home() {
     fetchMyList();
   }, []);
 
+  // Fetch main profile for Navbar
+  useEffect(() => {
+    const fetchMainProfile = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      try {
+        const res = await axios.get('http://localhost:5000/api/auth/profiles', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setMainProfile(res.data[0]);
+      } catch (err) {
+        setMainProfile(null);
+      }
+    };
+    fetchMainProfile();
+  }, []);
+
   const handleSignOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
@@ -63,22 +81,7 @@ function Home() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <img src={logo} alt="Netflix" className={styles.logo} />
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
-          {isLoggedIn ? (
-            <>
-              <Link to="/profile" style={{ color: '#fff', marginRight: 16, textDecoration: 'none', fontWeight: 600 }}>Profile</Link>
-              <button onClick={handleSignOut} style={{ background: '#e50914', color: '#fff', border: 'none', borderRadius: 4, padding: '8px 18px', fontWeight: 600, cursor: 'pointer' }}>Sign Out</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" style={{ color: '#fff', marginRight: 16, textDecoration: 'none', fontWeight: 600 }}>Sign In</Link>
-              <Link to="/register" style={{ color: '#e50914', textDecoration: 'none', fontWeight: 600 }}>Sign Up</Link>
-            </>
-          )}
-        </div>
-      </header>
+      <Navbar profile={mainProfile} />
       <section className={styles.hero}>
         <div className={styles.heroTitle}>Welcome to Netflix</div>
         <div className={styles.heroDesc}>
