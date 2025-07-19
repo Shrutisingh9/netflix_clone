@@ -1,0 +1,66 @@
+.container {
+  background: #141414;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.header {
+  display: flex;
+  align-items: center;
+  padding: 20px 40px;
+}
+.logo {
+  height: 40px;
+}
+.hero {
+  background: linear-gradient(90deg, #111 60%, transparent), url('https://assets.nflxext.com/ffe/siteui/vlv3/7e3e2e2c-7e2e-4e2e-8e2e-7e2e2e2e2e2e/7e2e2e2e-7e2e-4e2e-8e2e-7e2e2e2e2e2e_US-en-20230619-popsignuptwoweeks-perspective_alpha_website_large.jpg') center/cover no-repeat;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+  border-radius: 8px;
+  margin: 20px 40px;
+}
+.heroTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.heroDesc {
+  font-size: 1.2rem;
+  max-width: 600px;
+}
+.row {
+  margin: 30px 40px;
+}
+.rowTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.movies {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+}
+.movieCard {
+  background: #222;
+  border-radius: 4px;
+  width: 150px;
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.movieCard:hover {
+  transform: scale(1.08);
+  z-index: 2;
+} 
